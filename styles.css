@@ -1,0 +1,664 @@
+/* =========================================================
+   RESET
+========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+:root {
+  --bg-main: #05070d;
+  --bg-secondary: #0b0f19;
+  --bg-card: #131827;
+  --bg-soft: #1a2033;
+
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(80, 180, 255, 0.35);
+
+  --text-main: #ffffff;
+  --text-soft: #d9def0;
+  --text-muted: #aeb8d4;
+
+  --blue: #34c8ff;
+  --purple: #a94cff;
+  --focus: #ffe66d;
+  --danger: #ff5a6b;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 8px 25px rgba(0, 0, 0, 0.28);
+
+  --container: 1400px;
+  --sidebar-width: 240px;
+}
+
+/* =========================================================
+   BASE
+========================================================= */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  background:
+    linear-gradient(180deg, #06080f 0%, #04060b 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+p {
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+
+small {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   ACCESSIBILITY / FOCUS
+========================================================= */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 14px;
+  background: #ffffff;
+  color: #000000;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+.skip-link:focus {
+  top: 14px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+video:focus-visible,
+audio:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.header {
+  width: 100%;
+  border-bottom: 2px solid rgba(52, 200, 255, 0.18);
+  background: linear-gradient(90deg, #0a0d15 0%, #101526 100%);
+  padding: 18px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-publico {
+  border-bottom-color: rgba(52, 200, 255, 0.35);
+}
+
+.header-usuario {
+  border-bottom-color: rgba(52, 200, 255, 0.35);
+}
+
+.header-admin {
+  border-bottom-color: rgba(169, 76, 255, 0.35);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+.brand-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.header-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.header-title h1 {
+  font-size: 1.9rem;
+  margin-bottom: 4px;
+}
+
+.header-title p {
+  margin-bottom: 0;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   TOP NAV
+========================================================= */
+.header nav,
+nav[aria-label="Navegación principal"],
+nav[aria-label="Navegación principal de administrador"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.header nav a,
+nav[aria-label="Navegación principal"] a,
+nav[aria-label="Navegación principal de administrador"] a {
+  text-decoration: none;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: 0.2s ease;
+  font-size: 0.96rem;
+}
+
+.header nav a:hover,
+nav[aria-label="Navegación principal"] a:hover,
+nav[aria-label="Navegación principal de administrador"] a:hover {
+  background: rgba(52, 200, 255, 0.16);
+}
+
+.header nav a[aria-current="page"],
+nav[aria-label="Navegación principal"] a[aria-current="page"],
+nav[aria-label="Navegación principal de administrador"] a[aria-current="page"] {
+  background: linear-gradient(90deg, rgba(52, 200, 255, 0.22), rgba(169, 76, 255, 0.22));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =========================================================
+   PAGE LAYOUT WITH LEFT SIDEBAR
+========================================================= */
+.page-layout {
+  width: min(100%, var(--container));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: 26px;
+  padding: 24px;
+  align-items: start;
+}
+
+.sidebar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  position: sticky;
+  top: 20px;
+  box-shadow: var(--shadow-soft);
+}
+
+.sidebar h2 {
+  font-size: 1.8rem;
+  margin-bottom: 18px;
+}
+
+.sidebar nav {
+  display: block;
+}
+
+.sidebar-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-links li {
+  margin: 0;
+}
+
+.sidebar-links a {
+  text-decoration: none;
+  color: var(--text-main);
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+.sidebar-links a:hover {
+  background: rgba(52, 200, 255, 0.14);
+}
+
+.main-content {
+  min-width: 0;
+}
+
+/* =========================================================
+   MAIN GENERIC
+========================================================= */
+main {
+  min-width: 0;
+}
+
+/* =========================================================
+   HERO / INTRO
+========================================================= */
+.hero,
+.intro,
+.form-section,
+.perfil-usuario,
+.login-opciones,
+.detalle-evento,
+.evento,
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.hero,
+.intro {
+  padding: 20px;
+  margin-bottom: 26px;
+}
+
+.hero h2,
+.intro h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.hero p,
+.intro p {
+  max-width: 900px;
+}
+
+.hero-actions,
+.acoes,
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+.btn,
+button {
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-weight: 700;
+  font-size: 0.96rem;
+  transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(35, 70, 83, 0.16);
+}
+
+.btn:hover,
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.98;
+}
+
+.btn.danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+/* =========================================================
+   EVENT GRID
+========================================================= */
+.lista-eventos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.evento {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.evento:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  transition: 0.2s ease;
+}
+
+.evento img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.evento h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.evento p {
+  font-size: 0.97rem;
+  color: var(--text-soft);
+  margin-bottom: 14px;
+  flex-grow: 1;
+}
+
+.evento .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* =========================================================
+   FORMS
+========================================================= */
+.form-section,
+.perfil-usuario {
+  padding: 22px;
+}
+
+.form-section h1,
+.perfil-usuario h1 {
+  font-size: 1.9rem;
+}
+
+form {
+  margin-top: 14px;
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+legend {
+  padding: 0 8px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--text-main);
+  padding: 12px 12px;
+  font-size: 0.97rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(52, 200, 255, 0.48);
+  box-shadow: 0 0 0 3px rgba(52, 200, 255, 0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+input[type="file"] {
+  padding: 10px;
+  background: transparent;
+}
+
+.login-opciones {
+  margin-top: 20px;
+  padding: 18px;
+}
+
+.login-opciones h2 {
+  font-size: 1.3rem;
+}
+
+.login-opciones .btn {
+  margin-right: 10px;
+  margin-top: 8px;
+}
+
+/* =========================================================
+   DETAIL PAGE
+========================================================= */
+.detalle-layout {
+  max-width: 1000px;
+}
+
+.detalle-evento {
+  padding: 22px;
+}
+
+.detalle-header {
+  margin-bottom: 14px;
+}
+
+.detalle-meta {
+  color: var(--text-muted);
+}
+
+.imagen-evento {
+  width: 100%;
+  max-height: 440px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin: 16px 0 20px;
+}
+
+.media-player {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.media-note {
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   SIMPLE FOOTER
+========================================================= */
+.simple-footer {
+  width: min(100%, var(--container));
+  margin: 10px auto 24px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   OLD FOOTER SUPPORT
+========================================================= */
+.site-footer {
+  width: min(100%, var(--container));
+  margin: 20px auto 30px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-title {
+  margin-bottom: 14px;
+}
+
+.footer-links-vertical {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links-vertical a {
+  text-decoration: none;
+  color: var(--text-main);
+}
+
+.footer-links-vertical a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   UTILITY
+========================================================= */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(52, 200, 255, 0.16), rgba(169, 76, 255, 0.18));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-info p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 1200px) {
+  .lista-eventos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .page-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    width: 100%;
+  }
+
+  .lista-eventos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-title {
+    width: 100%;
+  }
+
+  .header nav,
+  nav[aria-label="Navegación principal"],
+  nav[aria-label="Navegación principal de administrador"] {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-layout {
+    padding: 16px;
+    gap: 18px;
+  }
+
+  .lista-eventos {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h2,
+  .intro h2,
+  .form-section h1,
+  .perfil-usuario h1 {
+    font-size: 1.6rem;
+  }
+
+  .evento img {
+    height: 210px;
+  }
+
+  .hero-actions,
+  .acoes,
+  .acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn,
+  button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sidebar h2 {
+    font-size: 1.5rem;
+  }
+}

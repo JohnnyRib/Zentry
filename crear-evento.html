@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear evento - GameLand</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+<header class="header header-admin">
+  <a href="index.html" class="logo-container" aria-label="Ir al perfil de administrador">
+    <img src="logo.png" alt="Logo de GameLand" class="logo">
+  </a>
+
+  <div class="header-title">
+    <h1>Crear evento</h1>
+    <p>Gestión de eventos del administrador</p>
+  </div>
+
+  <nav aria-label="Navegación principal de administrador">
+    <a href="index.html">Inicio</a>
+    <a href="buscar-evento.html">Buscar</a>
+    <a href="listado-evento.html">Mis eventos</a>
+    <a href="crear-evento.html" aria-current="page">Crear evento</a>
+    <a href="login.html">Logout</a>
+  </nav>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="Mapa web lateral">
+    <h2>Mapa web</h2>
+    <nav aria-label="Mapa web">
+      <ul class="sidebar-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="buscar-evento.html">Buscar evento</a></li>
+        <li><a href="listado-evento.html">Mis eventos</a></li>
+        <li><a href="crear-evento.html">Crear evento</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="contenido-principal" class="main-content">
+    <section class="form-section" aria-labelledby="titulo-crear">
+      <h2 id="titulo-crear">Crear evento</h2>
+      <p>Completa el formulario con la información del nuevo evento.</p>
+
+      <form action="listado-evento.html" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Datos del evento</legend>
+
+          <label for="titulo">Título del evento</label>
+          <input
+            type="text"
+            id="titulo"
+            name="titulo"
+            required
+            maxlength="60"
+            placeholder="Ej.: Festival de Invierno"
+            aria-describedby="ayuda-titulo"
+          >
+          <small id="ayuda-titulo">Escribe un nombre claro y corto.</small>
+
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria" required aria-describedby="ayuda-categoria">
+            <option value="">Selecciona una categoría</option>
+            <option value="musica">Música</option>
+            <option value="deporte">Deporte</option>
+            <option value="teatro">Teatro</option>
+            <option value="conferencia">Conferencia</option>
+            <option value="tecnologia">Tecnología</option>
+            <option value="otros">Otros</option>
+          </select>
+          <small id="ayuda-categoria">Elige la opción que mejor describa el evento.</small>
+
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha" required>
+
+          <label for="hora">Hora</label>
+          <input type="time" id="hora" name="hora" required>
+
+          <label for="ubicacion">Ubicación</label>
+          <input
+            type="text"
+            id="ubicacion"
+            name="ubicacion"
+            required
+            maxlength="80"
+            placeholder="Ej.: Barcelona, Palau Sant Jordi"
+            aria-describedby="ayuda-ubicacion"
+          >
+          <small id="ayuda-ubicacion">Indica ciudad y lugar del evento.</small>
+
+          <label for="descripcion">Descripción</label>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            rows="5"
+            required
+            maxlength="500"
+            placeholder="Describe el evento de forma simple y clara"
+            aria-describedby="ayuda-descripcion"
+          ></textarea>
+          <small id="ayuda-descripcion">Explica qué es el evento y qué encontrará el público.</small>
+
+          <label for="imagen">Imagen del evento</label>
+          <input type="file" id="imagen" name="imagen" accept="image/png, image/jpeg, image/webp">
+
+          <label for="imgUrl">URL de imagen del evento (opcional)</label>
+          <input
+            type="url"
+            id="imgUrl"
+            name="imgUrl"
+            placeholder="https://..."
+            aria-describedby="ayuda-imgurl"
+          >
+          <small id="ayuda-imgurl">Solo úsalo si quieres enlazar una imagen externa.</small>
+
+          <button type="submit">Crear evento</button>
+          <a href="perfil-promotor.html" class="btn">Volver</a>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+
+</div>
+
+</body>
+</html>

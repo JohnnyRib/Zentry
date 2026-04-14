@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar eventos - GameLand</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+<header class="header header-usuario">
+  <a href="index.html" class="logo-container">
+    <img src="logo.png" alt="Logo de GameLand" class="logo">
+    <span class="brand-text">GameLand</span>
+  </a>
+
+  <div class="header-title">
+    <h1>Buscar eventos</h1>
+    <p>Encuentra eventos según tus intereses</p>
+  </div>
+
+  <nav aria-label="Navegación principal">
+    <a href="index.html">Inicio</a>
+    <a href="buscar-evento.html" aria-current="page">Buscar</a>
+    <a href="listado-evento.html">Listado</a>
+    <a href="perfil-usuario.html">Mi perfil</a>
+    <a href="login.html">Logout</a>
+  </nav>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="Mapa web lateral">
+    <h2>Mapa web</h2>
+    <nav aria-label="Mapa web">
+      <ul class="sidebar-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="buscar-evento.html">Buscar evento</a></li>
+        <li><a href="listado-evento.html">Listado de eventos</a></li>
+        <li><a href="perfil-usuario.html">Perfil de usuario</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="contenido-principal" class="main-content">
+    <section class="form-section">
+      <h2>Formulario de búsqueda</h2>
+
+      <form action="listado-evento.html" method="get">
+        <fieldset>
+          <legend>Buscar evento</legend>
+
+          <label for="nombreEvento">Nombre del evento</label>
+          <input type="text" id="nombreEvento" name="nombre" placeholder="Ej.: Festival de Invierno" maxlength="60">
+
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria">
+            <option value="">Todas</option>
+            <option value="musica">Música</option>
+            <option value="deporte">Deporte</option>
+            <option value="teatro">Teatro</option>
+            <option value="tecnologia">Tecnología</option>
+          </select>
+
+          <label for="fecha">Fecha (opcional)</label>
+          <input type="date" id="fecha" name="fecha">
+
+          <button type="submit">Buscar</button>
+          <a href="index.html" class="btn">Home</a>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+
+</div>
+
+</body>
+</html>

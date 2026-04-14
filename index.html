@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameHub - Inicio</title>
+  <meta name="description" content="GameHub es una plataforma para descubrir eventos gaming de forma clara y accesible.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+<header class="header header-publico">
+  <a href="index.html" class="logo-container" aria-label="Ir al inicio de GameHub">
+    <img src="logo.png" alt="Logo de GameLand" class="logo">
+  </a>
+
+  <div class="header-title">
+    <h1>GameLand</h1>
+    <p>Plataforma de eventos gaming</p>
+  </div>
+
+  <nav aria-label="Navegación principal">
+    <a href="index.html" aria-current="page">Inicio</a>
+    <a href="listado-evento.html">Eventos</a>
+    <a href="login.html">Login</a>
+    <a href="registro-usuario.html">Registro</a>
+  </nav>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="Mapa web lateral">
+    <h2>Mapa web</h2>
+    <nav aria-label="Mapa web">
+      <ul class="sidebar-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="listado-evento.html">Listado de eventos</a></li>
+        <li><a href="buscar-evento.html">Buscar evento</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="registro-usuario.html">Registro de usuario</a></li>
+        <li><a href="registro-promotor.html">Registro de administrador</a></li>
+        <li><a href="perfil-usuario.html">Perfil de usuario</a></li>
+        <li><a href="crear-evento.html">Crear evento</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="contenido-principal" class="main-content">
+    <section class="hero" aria-labelledby="titulo-bienvenida">
+      <h2 id="titulo-bienvenida">Descubre eventos de forma simple</h2>
+      <p>
+        En GameHub puedes buscar, ver y conocer eventos gaming, torneos,
+        festivales y ferias tecnológicas de una forma más clara y accesible.
+      </p>
+
+      <div class="hero-actions">
+        <a href="listado-evento.html" class="btn">Ver eventos</a>
+        <a href="login.html" class="btn">Iniciar sesión</a>
+        <a href="registro-usuario.html" class="btn">Crear cuenta</a>
+      </div>
+    </section>
+
+    <section aria-labelledby="titulo-eventos">
+      <h2 id="titulo-eventos">Eventos destacados</h2>
+
+      <div class="lista-eventos">
+        <article class="evento">
+          <img src="festival-invierno.jpg" alt="Festival nocturno con luces y público observando una carroza decorada">
+          <h3>Festival de Invierno</h3>
+          <p>Evento temático con actividades, música y ambiente festivo.</p>
+          <a href="detalle-evento.html" class="btn">Información detallada</a>
+        </article>
+
+        <article class="evento">
+          <img src="Clash.png" alt="Escenario iluminado durante una celebración urbana">
+          <h3>Barcelona Esports Clash</h3>
+          <p>Torneo competitivo con equipos, retransmisión y actividades para el público.</p>
+          <a href="detalle-evento-tech.html" class="btn">Información detallada</a>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+</div>
+
+</body>
+</html>

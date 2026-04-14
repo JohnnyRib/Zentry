@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del evento - Barcelona Esports Clash</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+<header class="header header-usuario">
+  <a href="index.html" class="logo-container" aria-label="Ir al inicio">
+    <img src="logo.png" alt="Logo de GameLand" class="logo">
+  </a>
+
+  <div class="header-title">
+    <h1>Detalle del evento</h1>
+    <p>Información completa del evento</p>
+  </div>
+
+  <nav aria-label="Navegación principal">
+    <a href="index.html">Inicio</a>
+    <a href="buscar-evento.html">Buscar</a>
+    <a href="listado-evento.html">Listado</a>
+    <a href="perfil-usuario.html">Mi perfil</a>
+    <a href="login.html">Logout</a>
+  </nav>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="Mapa web lateral">
+    <h2>Mapa web</h2>
+    <nav aria-label="Mapa web">
+      <ul class="sidebar-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="buscar-evento.html">Buscar evento</a></li>
+        <li><a href="listado-evento.html">Listado de eventos</a></li>
+        <li><a href="perfil-usuario.html">Perfil de usuario</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="contenido-principal" class="main-content detalle-layout">
+    <article class="detalle-evento">
+      <header class="detalle-header">
+        <h2>Barcelona Esports Clash</h2>
+        <p class="detalle-meta"><strong>Fecha:</strong> 05/03/2026</p>
+      </header>
+
+      <img
+        class="imagen-evento"
+        src="Clash.png"
+        alt="Escenario iluminado y asistentes participando en un gran evento competitivo"
+      >
+
+      <section aria-labelledby="descripcion-evento">
+        <h3 id="descripcion-evento">Descripción</h3>
+        <p>
+          Barcelona Esports Clash reúne a equipos y espectadores en una jornada dedicada
+          a la competición, retransmisiones en directo, presentaciones y actividades de comunidad.
+        </p>
+      </section>
+
+      <section aria-labelledby="video-evento">
+        <h3 id="video-evento">Vídeo del evento</h3>
+        <video controls preload="metadata" class="media-player">
+          <source src="media/esports-clash.mp4" type="video/mp4">
+          <track src="media/esports-clash-subtitulos.vtt" kind="subtitles" srclang="es" label="Español">
+          Tu navegador no soporta vídeo HTML5.
+        </video>
+      </section>
+
+      <section aria-labelledby="audio-evento">
+        <h3 id="audio-evento">Audio informativo</h3>
+        <audio controls preload="metadata" class="media-player">
+          <source src="media/esports-clash.mp3" type="audio/mpeg">
+          Tu navegador no soporta audio HTML5.
+        </audio>
+      </section>
+
+      <section aria-labelledby="transcripcion-evento">
+        <h3 id="transcripcion-evento">Transcripción</h3>
+        <p>
+          El contenido audiovisual resume el torneo, explica la organización del evento,
+          los espacios para jugadores y público y los horarios generales de competición.
+        </p>
+      </section>
+
+      <nav class="acciones" aria-label="Acciones del evento">
+        <a class="btn" href="listado-evento.html">Volver al listado</a>
+        <a class="btn" href="buscar-evento.html">Buscar otro evento</a>
+      </nav>
+    </article>
+  </main>
+
+</div>
+
+</body>
+</html>
