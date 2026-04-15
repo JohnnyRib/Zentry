@@ -1,100 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gameland Events</title>
-    <link rel="stylesheet" href="Main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;700&family=Oxanium:wght@400;700&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zentry - Inicio Cliente</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-    <header class="main-header">
-        <div class="header-container container">
-            <div class="logo">
-                <img src="Imagenes/Gameland Logo.png" alt="Gameland Events Logo">
+<header class="header header-usuario">
+  <a href="Index_Cliente.html" class="logo-container">
+    <img src="logo.png" alt="Logo de GameLand" class="logo">
+  </a>
+  <div class="header-title">
+    <h1>Zentry</h1>
+    <p>Bienvenido, Jugador</p>
+  </div>
+  <nav aria-label="Navegación principal">
+    <a href="Index_Cliente.html" aria-current="page">Inicio</a>
+    <a href="listado-evento.html">Eventos</a>
+    <a href="perfil-usuario.html">Mi Perfil</a>
+    <form action="../Controler/controler.php" method="POST" style="display:inline;">
+        <button type="submit" name="logout" class="btn danger" style="padding: 8px 12px;">Cerrar Sesión</button>
+    </form>
+  </nav>
+</header>
 
-            </div>
-            <div class="search-bar">
-                <input type="search" placeholder="BUSCADOR...">
-            </div>
-        </div>
-    </header>
+<div class="page-layout">
+  <aside class="sidebar">
+    <h2>Mapa web</h2>
+    <nav>
+      <ul class="sidebar-links">
+        <li><a href="Index_Cliente.html">Inicio</a></li>
+        <li><a href="listado-evento.html">Listado de eventos</a></li>
+        <li><a href="buscar-evento.html">Buscar evento</a></li>
+        <li><a href="perfil-usuario.html">Perfil de usuario</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-    <main class="main-content container">
+  <main id="contenido-principal" class="main-content">
+    <section class="hero">
+      <h2>Descubre eventos de forma simple</h2>
+      <p>Explora torneos, festivales y ferias tecnológicas desde tu panel de usuario.</p>
+      <div class="hero-actions">
+        <a href="listado-evento.html" class="btn">Ver todos los eventos</a>
+      </div>
+    </section>
 
-        <section class="hero-slider">
-            <div class="decorations-left">
-            </div>
+    <section>
+      <h2>Categorías Destacadas</h2>
+      <div class="lista-eventos">
+        <article class="evento">
+          <img src="Imagenes/XboxLogo.png" alt="Xbox">
+          <h3>Xbox Games</h3>
+          <p>Torneos y novedades de la plataforma Microsoft.</p>
+          <a href="https://www.xbox.com/en-US/" class="btn">Explorar</a>
+        </article>
 
-            <div class="slider-banner">
-                <div class="banner-content">
-                    <img src="Imagenes/GAMEAWARD.jpg" alt="Game Awards Logo" >
-                </div>
+        <article class="evento">
+          <img src="Imagenes/PsnLogo.png" alt="PlayStation">
+          <h3>PSN Games</h3>
+          <p>Compite en los mejores eventos de PlayStation.</p>
+          <a href="https://www.playstation.com/en-us/" class="btn">Explorar</a>
+        </article>
 
-                <a href="Eventos.html" class="btn-featured">Ver Todos los eventos Destacados</a>
+        <article class="evento">
+          <img src="Imagenes/NintendoLogo.png" alt="Nintendo">
+          <h3>Nintendo Games</h3>
+          <p>Festivales y eventos para fans de Nintendo.</p>
+          <a href="https://www.nintendo.com/es-es/" class="btn">Explorar</a>
+        </article>
 
-                <button class="slider-arrow prev">&#10094;</button> <button class="slider-arrow next">&#10095;</button>
-            </div>
-
-            <div class="decorations-right">
-            </div>
-        </section>
-
-        <section class="platform-categories">
-            <a href="https://www.xbox.com/en-US/" class="category-item">
-                <div class="platform-icon" id="xbox">
-                    <img src="Imagenes/XboxLogo.png" alt="Xbox Logo">
-                </div>
-                <button class="btn-category">Xbox<br>GAMES</button>
-            </a>
-
-            <a href="https://www.playstation.com/en-us/" class="category-item">
-                <div class="platform-icon" id="psn">
-                    <img src="Imagenes/PsnLogo.png" alt="PSN Logo">
-                </div>
-                <button class="btn-category">PSN<br>GAMES</button>
-            </a>
-
-            <a href="https://www.nintendo.com/es-es/" class="category-item">
-                <div class="platform-icon" id="nintendo">
-                    <img src="Imagenes/NintendoLogo.png" alt="Nintendo Logo">
-                </div>
-                <button class="btn-category">Nintendo<br>GAMES</button>
-            </a>
-
-            <a href="https://apps.microsoft.com/games?hl=es-ES&gl=ES" class="category-item">
-                <div class="platform-icon" id="pc">
-                    <img src="Imagenes/MicrosoftLogo.png" alt="PC Logo">
-                </div>
-                <button class="btn-category">PC<br>GAMES</button>
-            </a>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-    <div class="footer-container container">
-        <nav aria-label="Mapa del sitio">
-            <ul style="list-style:none; display:flex; gap:20px; justify-content: flex-end;">
-                <li><a href="Main.html" style="color:white;">Inicio</a></li>
-                <li><a href="Eventos.html" style="color:white;">Eventos</a></li>
-                <li><a href="Perfil.html" style="color:white;">Perfil</a></li>
-                <li style="color: white">Cerrar Sesion</li>
-            </ul>
-        </nav>
-        <div class="social-links" style="margin-top:10px;">
-            <a href="#" class="social-icon x-icon" aria-label="X">X</a>
-            <a href="#" class="social-icon instagram-icon" aria-label="Instagram">IG</a>
-            <a href="#" class="social-icon facebook-icon" aria-label="Facebook">FB</a>
-        </div>
-    </div>
-</footer>
-
+        <article class="evento">
+          <img src="Imagenes/MicrosoftLogo.png" alt="PC">
+          <h3>PC Games</h3>
+          <p>Eventos exclusivos para jugadores de PC.</p>
+          <a href="https://apps.microsoft.com/games" class="btn">Explorar</a>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
 </body>
-
 </html>
