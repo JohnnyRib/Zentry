@@ -1,82 +1,68 @@
-    <?php
-    session_start();
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $user = new UserController();
+<?php
+session_start();
 
-        if (isset($_POST["login"])) {
-            //echo "<p>Login button is clicked.</p>";
-            $user->login();
-        }
-        if (isset($_POST["logout"])) {
-            //echo "<p>Login button is clicked.</p>";
-            $user->logout();
-        }
-        if (isset($_POST["register"])) {
-            //echo "<p>Login button is clicked.</p>";
-            $user->registro();
-        }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user = new UserController();
+
+    if (isset($_POST["login"])) {
+        $user->login();
     }
-    class UserController{
-         public $email;
-         public $usuario;
-         public $pass;
-         public $pass2;
-         public $rol;
-         public $conn;
-        
-        public function __construct( )
-        {          
-        }
+    if (isset($_POST["logout"])) {
+        $user->logout();
+    }
+    if (isset($_POST["register"])) {
+        $user->registro();
+    }
+}
 
+class UserController {
+    public $email;
+    public $usuario;
+    public $pass;
+    public $pass2;
+    public $rol;
 
-        public function registro(){
-            $this->email = $_POST['email'];
-            $this->usuario = $_POST['username'];
-            $this->pass = $_POST['password'];
-            $this->pass2 = $_POST['repeat-password'];
-            $this->rol = $_POST['role'];
+    public function registro() {
+        $this->email = $_POST['email'];
+        $this->usuario = $_POST['username'];
+        $this->pass = $_POST['password'];
+        $this->pass2 = $_POST['repeat-password'];
+        $this->rol = $_POST['role'];
 
-            $mensaje = "";
-
-            if ($this->pass !== $this->pass2) {
-                $mensaje = "Error: Las contraseñas no coinciden.";
-                echo $mensaje;
-            }else{
-               // $mensaje = "Registro exitoso para el usuario: " . htmlspecialchars($this->usuario);
-               // echo $mensaje;
-                //echo "<br>Usuario creado: " . $this->usuario;
-                if ($this->rol === "Cliente") {
+        if ($this->pass !== $this->pass2) {
+            echo "Error: Las contraseñas no coinciden.";
+        } else {
+            if ($this->rol === "Cliente") {
                 header("Location: ../View/Cliente.html");
                 exit();
-                }
-                else if ($this->rol === "Promotor") {
+            } else if ($this->rol === "Promotor") {
                 header("Location: ../View/Promotor.html");
                 exit();
-
-                }
-                else{
-                    echo "Error: En cargar la pagina";
-                }
+            } else {
+                echo "Error: En cargar la pagina";
             }
-        }   
-        public function login() {
-            $this->usuario = $_POST['usuario'];
-            $this->pass = $_POST['password'];
-            $this->rol = $_POST['role'];
-            //echo "Intentando entrar como: " . htmlspecialchars($this->usuario);
-            if ($this->rol === "Cliente") {
-                header("Location: ../View/Main_Cliente.html");
-            }else if ($this->rol === "Promotor") {
-                header("Location: ../View/Main_Promotor.html");
-            }else{
-                echo "Usuario no existe";
-            }
-        }  
-        
-        public function logout(){
-            session_destroy();
-            echo "Sesión cerrada.";
         }
     }
 
+    public function login() {
+        $this->usuario = $_POST['usuario'];
+        $this->pass = $_POST['password'];
+        $this->rol = $_POST['role'];
+
+        if ($this->rol === "Cliente") {
+            header("Location: ../View/Main_Cliente.html");
+            exit();
+        } else if ($this->rol === "Promotor") {
+            header("Location: ../View/Main_Promotor.html");
+            exit();
+        } else {
+            echo "Usuario no existe";
+        }
+    }
+
+    public function logout() {
+        session_destroy();
+        echo "Sesión cerrada.";
+    }
+}
 ?>
