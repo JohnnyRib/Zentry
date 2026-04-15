@@ -85,7 +85,7 @@ if ($stmt->execute()) {
 $stmt->close();
 $conexion->close();
 
--- Update los datos de la tabla User 
+//Update los datos de la tabla User 
 
 $conexion = new mysqli("localhost", "root", "", "mi_base_datos");
 
