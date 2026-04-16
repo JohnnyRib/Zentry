@@ -17,7 +17,7 @@ if($conexion-> connect_error) {
     echo "Conexión exitosa";
 
     $conexion -> set_charset("utf8mb4");
-    $conexion -> close();
+
 
     //INSERT de datos de la tabla USER
 
