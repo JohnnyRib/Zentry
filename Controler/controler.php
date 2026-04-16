@@ -39,7 +39,7 @@ class UserController {
                 header("Location: ../View/Index_Promotor.html");
                 exit();
             } else {
-                echo "Error: En cargar la pagina";
+                echo "Error: Rol no reconocido.";
             }
         }
     }
@@ -50,19 +50,20 @@ class UserController {
         $this->rol = $_POST['role'];
 
         if ($this->rol === "Cliente") {
-            header("Location: ../View/Main_Cliente.html");
+            header("Location: ../View/Index_Cliente.html");
             exit();
         } else if ($this->rol === "Promotor") {
-            header("Location: ../View/Main_Promotor.html");
+            header("Location: ../View/Index_Promotor.html");
             exit();
         } else {
-            echo "Usuario no existe";
+            echo "Usuario o rol no existe";
         }
     }
 
     public function logout() {
         session_destroy();
-        echo "Sesión cerrada.";
+        header("Location: ../View/index.html");
+        exit();
     }
 }
 ?>
