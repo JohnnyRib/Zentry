@@ -74,7 +74,7 @@ class UserController
         // insert sql
         // INSERT con prepared statement
         // $sql = "INSERT INTO User (email, username, age, password, role) VALUE (?, ?, ?, ?, ?)";
-        $sql = "INSERT INTO User (email) VALUE (?)";
+        $sql = "INSERT INTO User (email, username, age, password, role) VALUE (?, ?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($sql);
 
 
