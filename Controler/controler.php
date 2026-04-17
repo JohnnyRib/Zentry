@@ -56,30 +56,14 @@ class UserController
         $this->pass2 = $_POST['repeat-password'];
         $this->rol = $_POST['role'];
 
-        // if ($this->pass !== $this->pass2) {
-        //     echo "Error: Las contraseñas no coinciden.";
-        // } else {
-        //     if ($this->rol === "Cliente") {
-        //         header("Location: ../View/Index_Cliente.html");
-        //         exit();
-        //     } else if ($this->rol === "Promotor") {
-        //         header("Location: ../View/Index_Promotor.html");
-        //         exit();
-        //     } else {
-        //         echo "Error: Rol no reconocido.";
-        //     }
-        // }
-
-
-        // insert sql
-        // INSERT con prepared statement
-        // $sql = "INSERT INTO User (email, username, age, password, role) VALUE (?, ?, ?, ?, ?)";
+    
+        $this->rol = ($_POST['role'] === "Promotor") ? 1 : 0;
         $sql = "INSERT INTO User (email, username, password, repeat_password, role) VALUE (?, ?, ?, ?, ?)";
         $stmt = $this->conexion->prepare($sql);
 
 
 
-        $stmt->bind_param("sssss", $this->email, $this->usuario, $this->pass, $this->pass2, $this->rol);
+        $stmt->bind_param("ssssi", $this->email, $this->usuario, $this->pass, $this->pass2, $this->rol);
 
         if ($stmt->execute()) {
             echo "Registro insertado correctamente<br>";
