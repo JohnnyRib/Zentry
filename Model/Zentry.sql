@@ -21,3 +21,18 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP ON Zentry.* TO 'Zentry
 CREATE USER 'app_web'@'localhost' IDENTIFIED BY '1234!';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP ON Zentry.* TO 'app_web'@'localhost';
 
+
+//-- Primero borramos si existen para evitar conflictos
+DROP USER IF EXISTS 'Zentry_team'@'localhost';
+DROP USER IF EXISTS 'app_web'@'localhost';
+
+-- Creamos el usuario del equipo
+CREATE USER 'Zentry_team'@'localhost' IDENTIFIED BY 'Zentry687';
+GRANT ALL PRIVILEGES ON Zentry.* TO 'Zentry_team'@'localhost';
+
+-- Creamos el usuario de la web
+CREATE USER 'app_web'@'localhost' IDENTIFIED BY '1234!';
+GRANT SELECT, INSERT, UPDATE, DELETE ON Zentry.* TO 'app_web'@'localhost';
+
+-- Aplicamos los cambios
+FLUSH PRIVILEGES;
