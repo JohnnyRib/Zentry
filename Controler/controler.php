@@ -56,7 +56,6 @@ class UserController
         $this->pass2 = $_POST['repeat-password'];
         $this->rol = $_POST['role'];
 
-<<<<<<< HEAD
         // if ($this->pass !== $this->pass2) {
         //     echo "Error: Las contraseñas no coinciden.";
         // } else {
@@ -70,21 +69,6 @@ class UserController
         //         echo "Error: Rol no reconocido.";
         //     }
         // }
-=======
-        if ($this->pass !== $this->pass2) {
-            echo "Error: Las contraseñas no coinciden.";
-        } else {
-            if ($this->rol === "Cliente") {
-                header("Location: ../View/Index_Cliente.html");
-                exit();
-            } else if ($this->rol === "Promotor") {
-                header("Location: ../View/Index_Promotor.html");
-                exit();
-            } else {
-                echo "Error: Rol no reconocido.";
-            }
-        }
->>>>>>> e4ed19d91d1d0921db5d74edc57a5dcafb6df946
 
 
         // insert sql
