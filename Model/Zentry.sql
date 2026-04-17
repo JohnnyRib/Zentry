@@ -1,7 +1,9 @@
 create database Zentry;
 drop user 'app_web'@'localhost';
 use Zentry;
+select * from User;
 
+drop table User;
 create table User (
 id int primary key auto_increment, 
 email varchar(200) not null,
