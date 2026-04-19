@@ -25,68 +25,70 @@ class UserController
     public $conexion;
 
     public function __construct()
-    {
+{
+    $host = "localhost";
+    $usuario = "Zentry_team";
+    $password = "Zentry687";
+    $base_datos = "zentry";
 
-        $host = "localhost";
-        $usuario = "Zentry_team";
-        $password = "Zentry687";
-        $base_datos = "Zentry";
+    $this->conexion = new mysqli($host, $usuario, $password, $base_datos);
 
-        // Crear conexión
-        $this->conexion = new mysqli($host, $usuario, $password, $base_datos);
-
-        // Verificar conexión
-        if ($this->conexion->connect_error) {
-            die("Error de conexión: " . $this->conexion->connect_error);
-        }
-
-        echo "Conexión exitosa";
-
-        // Establecer charset UTF-8
-        $this->conexion->set_charset("utf8mb4");
+    if ($this->conexion->connect_error) {
+        die("Error de conexión: " . $this->conexion->connect_error);
     }
+
+    $this->conexion->set_charset("utf8mb4");
+}
 
 
     public function registro()
-    {
-        echo "en register";
-        $this->email = $_POST['email'];
-        $this->usuario = $_POST['username'];
-        $this->pass = $_POST['password'];
-        $this->pass2 = $_POST['repeat-password'];
-        $this->rol = $_POST['role'];
+{
+    $this->email = trim($_POST['email']);
+    $this->usuario = trim($_POST['username']);
+    $this->pass = $_POST['password'];
+    $this->pass2 = $_POST['repeat-password'];
+    $this->rol = ($_POST['role'] === "Promotor") ? 1 : 0;
 
-
-        $this->rol = ($_POST['role'] === "Promotor") ? 1 : 0;
-        $sql = "INSERT INTO User (email, username, password, repeat_password, role) VALUE (?, ?, ?, ?, ?)";
-        $stmt = $this->conexion->prepare($sql);
-
-
-
-        $stmt->bind_param("ssssi", $this->email, $this->usuario, $this->pass, $this->pass2, $this->rol);
-
-        if ($stmt->execute()) {
-            echo "Registro insertado correctamente<br>";
-            echo "ID del nuevo registro: " . $this->conexion->insert_id;
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-
-        $stmt->close();
-        $this->conexion->close();
-
-        // gestionar error
-
+    if ($this->pass !== $this->pass2) {
+        die("Error: las contraseñas no coinciden.");
     }
+
+    $sql = "INSERT INTO `user` (email, username, password, repeat_password, role) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $this->conexion->prepare($sql);
+
+    if (!$stmt) {
+        die("Error en prepare: " . $this->conexion->error);
+    }
+
+    $stmt->bind_param("ssssi", $this->email, $this->usuario, $this->pass, $this->pass2, $this->rol);
+
+    if ($stmt->execute()) {
+        if ($this->rol === 1) {
+            header("Location: ../View/Index_Promotor.html");
+        } else {
+            header("Location: ../View/Index_Cliente.html");
+        }
+        exit();
+    } else {
+        echo "Error al registrar: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $this->conexion->close();
+}
 
     public function login()
 {
     $this->usuario = $_POST['usuario'];
     $this->pass = $_POST['password'];
-    $this->rol = $_POST['role'];
 
-    $sql = "SELECT email, password, role FROM User WHERE email = ?";
+    $sql = "SELECT email, password, role FROM `user` WHERE email = ?";
     $stmt = $this->conexion->prepare($sql);
+
+    if (!$stmt) {
+        die("Error en prepare: " . $this->conexion->error);
+    }
+
     $stmt->bind_param("s", $this->usuario);
     $stmt->execute();
     $resultado = $stmt->get_result();
@@ -96,13 +98,12 @@ class UserController
             $_SESSION['user_email'] = $fila['email'];
             $_SESSION['user_role'] = $fila['role'];
 
-            if ($this->rol === "Cliente") {
-                header("Location: ../View/Index_Cliente.html");
-                exit();
-            } else if ($this->rol === "Promotor") {
+            if ((int)$fila['role'] === 1) {
                 header("Location: ../View/Index_Promotor.html");
-                exit();
+            } else {
+                header("Location: ../View/Index_Cliente.html");
             }
+            exit();
         } else {
             echo "Error: Contraseña incorrecta.";
         }
