@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del evento - Xbox Games Showcase</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+<header class="header header-usuario">
+  <a href="index.html" class="logo-container" aria-label="Ir al inicio">
+    <img src="Imagenes/logo.png" alt="Logo de Zentry" class="logo">
+  </a>
+
+  <div class="header-title">
+    <h1>Detalle del evento</h1>
+    <p>Información completa del evento</p>
+  </div>
+
+  <nav aria-label="Navegación principal">
+    <a href="index.html">Inicio</a>
+    <a href="buscar-evento.html">Buscar</a>
+    <a href="listado-evento.html">Listado</a>
+    <a href="perfil-usuario.html">Mi perfil</a>
+    <a href="login.html">Logout</a>
+  </nav>
+</header>
+
+<div class="page-layout">
+
+  <aside class="sidebar" aria-label="Mapa web lateral">
+    <h2>Mapa web</h2>
+    <nav aria-label="Mapa web">
+      <ul class="sidebar-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="buscar-evento.html">Buscar evento</a></li>
+        <li><a href="listado-evento.html">Listado de eventos</a></li>
+        <li><a href="perfil-usuario.html">Perfil de usuario</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main id="contenido-principal" class="main-content detalle-layout">
+    <article class="detalle-evento">
+      <header class="detalle-header">
+        <h2>Xbox Games Showcase 2026</h2>
+        <p class="detalle-meta"><strong>Fecha:</strong> 09/06/2026</p>
+      </header>
+
+      <img
+        class="imagen-evento"
+        src="Imagenes/Xshowcase.png"
+        alt="Logotipo de Xbox sobre un fondo verde digital con efectos de partículas"
+      >
+
+      <section aria-labelledby="descripcion-evento">
+        <h3 id="descripcion-evento">Descripción</h3>
+        <p>
+          El Xbox Games Showcase es la presentación principal de Microsoft donde se revelan 
+          los títulos que llegarán a Xbox Series X|S, PC y Game Pass. Incluye avances exclusivos, 
+          entrevistas con desarrolladores y fechas de lanzamiento de los juegos más esperados.
+        </p>
+      </section>
+
+      <section aria-labelledby="video-evento">
+        <h3 id="video-evento">Vídeo del evento</h3>
+        <div class="media-container">
+          <video controls preload="metadata" class="media-player">
+            <source src="Videos/Xbox_ShowCase.mp4" type="video/mp4">
+          </video>
+        </div>
+      </section>
+
+      <section aria-labelledby="audio-evento">
+        <h3 id="audio-evento">Audio informativo</h3>
+        <div class="media-container">
+          <audio controls preload="metadata" class="media-player">
+            <source src="Audios/Xbox_ShowCase.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </section>
+
+      <section aria-labelledby="transcripcion-evento">
+        <h3 id="transcripcion-evento">Transcripción</h3>
+        <p>
+          Este audio detalla los anuncios principales de la conferencia, incluyendo nuevos 
+          detalles sobre el hardware de Xbox, los lanzamientos de estudios internos como 
+          Bethesda y Activision, y las novedades que llegan al catálogo de Game Pass.
+        </p>
+      </section>
+
+      <nav class="acciones" aria-label="Acciones del evento">
+        <a class="btn" href="listado-evento.html">Volver al listado</a>
+        <a class="btn" href="buscar-evento.html">Buscar otro evento</a>
+      </nav>
+    </article>
+  </main>
+
+</div>
+
+</body>
+</html>
