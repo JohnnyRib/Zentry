@@ -1,4 +1,11 @@
 <?php
+
+/*=========================================
+Inicio de sesión y control de acceso para el login, 
+registro y logout de usuarios.
+=========================================*/
+
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,6 +31,13 @@ class UserController
     public $rol;
     public $conexion;
 
+
+
+
+/*====================================================================================================
+Conexión a la base de datos utilizando PDO para una gestión más segura y eficiente de las consultas.
+=====================================================================================================*/
+
     public function __construct()
 {
     $host = "localhost";
@@ -31,36 +45,32 @@ class UserController
     $password = "Zentry687";
     $base_datos = "zentry";
 
-    /*
-    Conexion PDO
     try{
         //DNS
-        $dns = mysql:host=$host;dbname=$base_datos;charset=utf8mb4;
+        $dns = "mysql:host=$host;dbname=$base_datos;charset=utf8mb4";
 
         $opciones =[
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES =>
+            PDO::ATTR_EMULATE_PREPARES => false
         ];
-        $pdo = new PDO($dsn, $usuario, $password, $opciones);
+        $this->conexion = new PDO($dns, $usuario, $password, $opciones);
         echo "Conexión exitosa";
     } catch (PDOException $e) {
     die("Error de conexión: " . $e->getMessage());
     }
-    */
+  
 
 
-
-    $this->conexion = new mysqli($host, $usuario, $password, $base_datos);
-
-    if ($this->conexion->connect_error) {
-        die("Error de conexión: " . $this->conexion->connect_error);
-    }
-
-    $this->conexion->set_charset("utf8mb4");
 }
 
+/*=============================================================================== 
+Metodos de registro, login y logout para gestionar la autenticación de usuarios, 
+con validaciones básicas y redirecciones según el rol del usuario.
+===============================================================================*/
 
+
+//Registro de usuarios con validación de contraseñas y asignación de roles.
     public function registro()
 {
     $this->email = trim($_POST['email']);
@@ -97,6 +107,8 @@ class UserController
     $this->conexion->close();
 }
 
+
+//Login de usuarios con verificación de credenciales y redirección según el rol.
     public function login()
 {
     $this->usuario = $_POST['usuario'];
@@ -135,6 +147,8 @@ class UserController
     $this->conexion->close();
 }
 
+
+//Logout de usuarios destruyendo la sesión y redirigiendo al inicio.
     public function logout()
     {
         session_destroy();
