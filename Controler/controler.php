@@ -45,6 +45,9 @@ Conexión a la base de datos utilizando PDO para una gestión más segura y efic
     $password = "Zentry687";
     $base_datos = "zentry";
 
+
+
+    // Establecer conexión con PDO
     try{
         //DNS
         $dns = "mysql:host=$host;dbname=$base_datos;charset=utf8mb4";
@@ -86,27 +89,27 @@ con validaciones básicas y redirecciones según el rol del usuario.
     $sql = "INSERT INTO `user` (email, username, password, repeat_password, role) VALUES (?, ?, ?, ?, ?)";
     $stmt = $this->conexion->prepare($sql);
 
-    if (!$stmt) {
-        die("Error en prepare: " . $this->conexion->error);
-    }
-
-    $stmt->bind_param("ssssi", $this->email, $this->usuario, $this->pass, $this->pass2, $this->rol);
-
-    if ($stmt->execute()) {
-        if ($this->rol === 1) {
-            header("Location: ../View/Index_Promotor.html");
-        } else {
-            header("Location: ../View/Index_Cliente.html");
-        }
-        exit();
-    } else {
-        echo "Error al registrar: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $this->conexion->close();
+    try {
+    $pdo = new PDO("mysql:host=localhost;dbname=mi_base_datos", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $sql = "INSERT INTO usuarios (nombre, email, edad) VALUES (:nombre, :email, :edad)";
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->execute([
+        ':nombre' => 'Pedro Martínez',
+        ':email' => 'pedro@ejemplo.com',
+        ':edad' => 35
+    ]);
+    
+    echo "Registro insertado correctamente<br>";
+    echo "ID del nuevo registro: " . $pdo->lastInsertId();
+    
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
 
+}
 
 //Login de usuarios con verificación de credenciales y redirección según el rol.
     public function login()
@@ -117,34 +120,38 @@ con validaciones básicas y redirecciones según el rol del usuario.
     $sql = "SELECT email, password, role FROM `user` WHERE email = ?";
     $stmt = $this->conexion->prepare($sql);
 
-    if (!$stmt) {
-        die("Error en prepare: " . $this->conexion->error);
-    }
+if (!$stmt) {
+    die("Error en prepare.");
+}
 
-    $stmt->bind_param("s", $this->usuario);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+$stmt->execute([$this->usuario]);
 
-    if ($fila = $resultado->fetch_assoc()) {
-        if ($this->pass === $fila['password']) {
-            $_SESSION['user_email'] = $fila['email'];
-            $_SESSION['user_role'] = $fila['role'];
+$fila = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ((int)$fila['role'] === 1) {
-                header("Location: ../View/Index_Promotor.html");
-            } else {
-                header("Location: ../View/Index_Cliente.html");
-            }
-            exit();
+if ($fila) {
+    if ($this->pass === $fila['password']) {
+
+        $_SESSION['user_email'] = $fila['email'];
+        $_SESSION['user_role'] = $fila['role'];
+
+        if ((int)$fila['role'] === 1) {
+            header("Location: ../View/Index_Promotor.html");
         } else {
-            echo "Error: Contraseña incorrecta.";
+            header("Location: ../View/Index_Cliente.html");
         }
-    } else {
-        echo "Error: Usuario no encontrado.";
-    }
 
-    $stmt->close();
-    $this->conexion->close();
+        exit();
+
+    } else {
+        echo "Error: Contraseña incorrecta.";
+    }
+} else {
+    echo "Error: Usuario no encontrado.";
+}
+
+// En PDO no se usa close()
+$stmt = null;
+$this->conexion = null;
 }
 
 
