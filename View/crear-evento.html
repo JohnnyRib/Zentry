@@ -49,7 +49,7 @@
       <h2 id="titulo-crear">Crear evento</h2>
       <p>Completa el formulario con la información del nuevo evento.</p>
 
-      <form action="listado-evento.html" method="post" enctype="multipart/form-data">
+      <form id="formCrearEvento" action="listado-evento.html" method="post" enctype="multipart/form-data">       
         <fieldset>
           <legend>Datos del evento</legend>
 
@@ -69,7 +69,7 @@
           <select id="categoria" name="categoria" required aria-describedby="ayuda-categoria">
             <option value="">Selecciona una categoría</option>
             <option value="musica">Música</option>
-            <option value="deporte">Deporte</option>
+            <option value="deporte">eSports</option>
             <option value="teatro">Teatro</option>
             <option value="conferencia">Conferencia</option>
             <option value="tecnologia">Tecnología</option>
@@ -121,13 +121,29 @@
           <small id="ayuda-imgurl">Solo úsalo si quieres enlazar una imagen externa.</small>
 
           <button type="submit">Crear evento</button>
-          <a href="perfil-promotor.html" class="btn">Volver</a>
+          <a href="Index_Promotor.html" class="btn">Volver</a>
+
         </fieldset>
       </form>
     </section>
   </main>
 
 </div>
+
+<!-- Modal de confirmación -->
+<div id="fondoModalEvento">
+  <div id="cajaModalEvento">
+    <h2>Evento creado correctamente</h2>
+    <p>El nuevo evento ha sido registrado en la plataforma Zentry.</p>
+    <small>Pulsa fuera del mensaje para cerrar esta ventana.</small>
+  </div>
+</div>
+
+<!-- Primero jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Después tu archivo propio -->
+<script src="JQuery/JQuery.js"></script>
 
 </body>
 </html>
