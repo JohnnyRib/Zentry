@@ -31,6 +31,26 @@ class UserController
     $password = "Zentry687";
     $base_datos = "zentry";
 
+    /*
+    Conexion PDO
+    try{
+        //DNS
+        $dns = mysql:host=$host;dbname=$base_datos;charset=utf8mb4;
+
+        $opciones =[
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES =>
+        ];
+        $pdo = new PDO($dsn, $usuario, $password, $opciones);
+        echo "Conexión exitosa";
+    } catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+    }
+    */
+
+
+
     $this->conexion = new mysqli($host, $usuario, $password, $base_datos);
 
     if ($this->conexion->connect_error) {
