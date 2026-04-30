@@ -80,11 +80,11 @@ con validaciones básicas y redirecciones según el rol del usuario.
             die("Error: las contraseñas no coinciden.");
         }
 
-       try {
+        try {
             // Usamos la tabla 'user' y los campos de tu lógica original
             $sql = "INSERT INTO `user` (email, username, password, repeat_password, role) 
                     VALUES (:email, :username, :password, :repeat_password, :role)";
-            
+
             $stmt = $this->conexion->prepare($sql);
 
             $stmt->execute([
@@ -101,8 +101,7 @@ con validaciones básicas y redirecciones según el rol del usuario.
                 header("Location: ../View/Index_Cliente.html");
             }
             exit();
-
-            } catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo "Error al registrar: " . $e->getMessage();
         }
     }
@@ -112,14 +111,14 @@ con validaciones básicas y redirecciones según el rol del usuario.
         $this->usuario = $_POST['usuario'];
         $this->pass = $_POST['password'];
 
-    try{
+        try {
 
-        $sql = "SELECT email, password, role FROM `user` WHERE email = :email";
-        $stmt = $this->conexion->prepare($sql);
+            $sql = "SELECT email, password, role FROM `user` WHERE email = :email";
+            $stmt = $this->conexion->prepare($sql);
 
-        $stmt->execute([':email' => $this->usuario]);
+            $stmt->execute([':email' => $this->usuario]);
 
-        if ($fila = $stmt->fetch()) {
+            if ($fila = $stmt->fetch()) {
                 // Verificación de contraseña
                 if ($this->pass === $fila['password']) {
                     $_SESSION['user_email'] = $fila['email'];
@@ -138,12 +137,39 @@ con validaciones básicas y redirecciones según el rol del usuario.
             } else {
                 echo "Error: Usuario no encontrado.";
             }
-            } catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo "Error en el login: " . $e->getMessage();
         }
     }
 
-    
+    public function updateUser()
+    {
+        if (!isset($_SESSION['user_email'])) {
+            die("Error: No hay una sesión activa.");
+        }
+
+        $emailActual = $_SESSION['user_email'];
+        $nuevoUsername = trim($_POST['username']);
+        $nuevoEmail = trim($_POST['email']);
+
+        try {
+            $sql = "UPDATE `user` SET username = :username, email = :email WHERE email = :email_actual";
+            $stmt = $this->conexion->prepare($sql);
+
+            $stmt->execute([
+                ':username'     => $nuevoUsername,
+                ':email'        => $nuevoEmail,
+                ':email_actual' => $emailActual
+            ]);
+
+            $_SESSION['user_email'] = $nuevoEmail;
+            echo "Datos actualizados correctamente.";
+        } catch (PDOException $e) {
+            echo "Error al actualizar los datos: " . $e->getMessage();
+        }
+    }
+
+
     //Logout de usuarios destruyendo la sesión y redirigiendo al inicio.
     public function logout()
     {
@@ -152,4 +178,3 @@ con validaciones básicas y redirecciones según el rol del usuario.
         exit();
     }
 }
-
