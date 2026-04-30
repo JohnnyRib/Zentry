@@ -1,8 +1,7 @@
 <?php
 
 /*=========================================
-Inicio de sesión y control de acceso para el login, 
-registro y logout de usuarios.
+Inicio de sesión y control de acceso para el login, registro y logout de usuarios.
 =========================================*/
 
 
@@ -24,14 +23,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 class UserController
 {
+
+/*==================================================================================================
+Propiedades para la gestión de usuarios, incluyendo campos como email, username, 
+password, repeat_password y role para almacenar la información de los usuarios registrados.
+===================================================================================================*/
     public $email;
     public $usuario;
     public $pass;
     public $pass2;
     public $rol;
     public $conexion;
+    
 
-
+/*================================================================================================== 
+Propiedades para la gestión de eventos, incluyendo campos como event_id, event_name, event_category, 
+event_date, event_time, event_location,event_description, event_image, event_audio y event_video.
+===================================================================================================*/
+    public $event_id;
+    public $event_name;
+    public $event_category; 
+    public $event_date;
+    public $event_time;
+    public $event_location;
+    public $event_description;
+    public $event_image;
+    public $event_audio;
+    public $event_video;
+    
 
 
 /*====================================================================================================
@@ -48,6 +67,9 @@ Conexión a la base de datos utilizando PDO para una gestión más segura y efic
 
 
     // Establecer conexión con PDO
+
+/*Concción con la base de Datos*/
+
     try{
         //DNS
         $dns = "mysql:host=$host;dbname=$base_datos;charset=utf8mb4";
@@ -63,7 +85,6 @@ Conexión a la base de datos utilizando PDO para una gestión más segura y efic
     die("Error de conexión: " . $e->getMessage());
     }
   
-
 
 }
 
@@ -90,7 +111,7 @@ con validaciones básicas y redirecciones según el rol del usuario.
     $stmt = $this->conexion->prepare($sql);
 
     try {
-    $pdo = new PDO("mysql:host=localhost;dbname=mi_base_datos", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname=Zentry", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     $sql = "INSERT INTO usuarios (nombre, email, edad) VALUES (:nombre, :email, :edad)";
@@ -161,5 +182,32 @@ $this->conexion = null;
         session_destroy();
         header("Location: ../View/index.html");
         exit();
+    }
+
+/*=========================================================
+Metodo de Lectura Registros de Eventos 
+==========================================================*/
+    public function leerEventos()
+    {
+    
+    try {
+    $pdo = new PDO("mysql:host=localhost;dbname=Zentry", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Ejecutar consulta
+    $sql = "SELECT event_name, event_category, event_date FROM Events";
+    $stmt = $pdo->query($sql);
+    
+    // Recorrer resultados
+    while ($fila = $stmt->fetch()) {
+        echo "Nombre: " . $fila['event_name'] . " - ";
+        echo "Categoría: " . $fila['event_category'] . " - ";
+        echo "Fecha: " . $fila['event_date'] . "<br>";
+    }
+    
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}    
+
     }
 }
