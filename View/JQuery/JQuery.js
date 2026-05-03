@@ -71,5 +71,7 @@ $(document).ready(function () {
     $(this).css("filter", "brightness(1)");
     console.log("El ratón ha salido de la imagen.");
   });
+
+  
 });
 
