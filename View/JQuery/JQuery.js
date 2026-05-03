@@ -55,7 +55,7 @@ $(document).ready(function () {
   });
 
   // Slider Promotores/Clientes
-  $(".slider-promotores").slick({
+  $(".lista-eventos").slick({
     infinite: true,
     slidesToShow: 3,
     dots: true,
