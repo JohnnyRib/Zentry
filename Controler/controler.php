@@ -169,6 +169,8 @@ con validaciones básicas y redirecciones según el rol del usuario.
         }
     }
 
+    
+
 
     //Logout de usuarios destruyendo la sesión y redirigiendo al inicio.
     public function logout()
