@@ -168,16 +168,25 @@ con validaciones básicas y redirecciones según el rol del usuario.
             echo "Error al actualizar los datos: " . $e->getMessage();
         }
     }
+    public function deleteUser()
+    {
+        if (!isset($_SESSION['user_email'])) {
+            die("Error: No se encontró una sesión activa para procesar la baja.");
+        }
+
+        $emailUsuario = $_SESSION['user_email'];
+
+        try {
+            $sql = "DELETE FROM `user` WHERE email = :email";
+            $stmt = $this->conexion->prepare($sql);
 
     
 
 
-    //Logout de usuarios destruyendo la sesión y redirigiendo al inicio.
     public function logout()
     {
         session_destroy();
         header("Location: ../View/index.html");
         exit();
-        // add line
     }
 }
