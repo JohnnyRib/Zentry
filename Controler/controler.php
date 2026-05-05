@@ -179,9 +179,18 @@ con validaciones básicas y redirecciones según el rol del usuario.
         try {
             $sql = "DELETE FROM `user` WHERE email = :email";
             $stmt = $this->conexion->prepare($sql);
+            $stmt->execute([':email' => $emailUsuario]);
 
-    
+            // Una vez eliminado de la base de datos, procedemos a cerrar la sesión
+            session_destroy();
 
+            // Redirigimos al index o página de despedida
+            header("Location: ../View/index.html");
+            exit();
+        } catch (PDOException $e) {
+            echo "Error al procesar la baja: " . $e->getMessage();
+        }
+    }
 
     public function logout()
     {
