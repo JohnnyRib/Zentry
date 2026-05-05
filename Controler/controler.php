@@ -196,6 +196,5 @@ con validaciones básicas y redirecciones según el rol del usuario.
         session_destroy();
         header("Location: ../View/index.html");
         exit();
-        // add line
     }
 }
