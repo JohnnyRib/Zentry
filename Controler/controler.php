@@ -19,6 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (isset($_POST["register"])) {
         $user->registro();
+    }if (isset($_POST["update_user"])) {
+        $user->updateUser();
+    }
+    if (isset($_POST["delete_account"])) {
+        $user->deleteUser();
+    }
+    if (isset($_POST["change_password"])) {
+        $user->UpdatePassword();
     }
 }
 
