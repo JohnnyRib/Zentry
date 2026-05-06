@@ -1,3 +1,10 @@
+<?php
+
+class EventController {
+
+
+
+
 
 /*=========================================================
     R. Metodo de Lectura Registros de Eventos 
@@ -25,3 +32,6 @@
 }    
 
     }
+
+} 
+
