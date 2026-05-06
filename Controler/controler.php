@@ -168,6 +168,46 @@ con validaciones básicas y redirecciones según el rol del usuario.
             echo "Error al actualizar los datos: " . $e->getMessage();
         }
     }
+    public function UpdatePassword()
+    {
+        if (!isset($_SESSION['user_email'])) {
+            die("Error: No hay una sesión activa.");
+        }
+
+        $emailUsuario = $_SESSION['user_email'];
+        $passActual = $_POST['current_password']; 
+        $nuevaPass = $_POST['new_password'];
+        $confirmarPass = $_POST['confirm_password'];
+
+        if ($nuevaPass !== $confirmarPass) {
+            die("Error: La nueva contraseña y su confirmación no coinciden.");
+        }
+
+        try {
+            $sqlVerificar = "SELECT password FROM `user` WHERE email = :email";
+            $stmtVerificar = $this->conexion->prepare($sqlVerificar);
+            $stmtVerificar->execute([':email' => $emailUsuario]);
+            $usuario = $stmtVerificar->fetch();
+
+            if ($usuario && $passActual === $usuario['password']) {
+                $sqlUpdate = "UPDATE `user` SET password = :password, repeat_password = :repeat_password WHERE email = :email";
+                $stmtUpdate = $this->conexion->prepare($sqlUpdate);
+
+                $stmtUpdate->execute([
+                    ':password'        => $nuevaPass,
+                    ':repeat_password' => $nuevaPass, 
+                    ':email'           => $emailUsuario
+                ]);
+
+                echo "Contraseña actualizada con éxito.";
+            } else {
+                echo "Error: La contraseña actual es incorrecta.";
+            }
+        } catch (PDOException $e) {
+            echo "Error al actualizar la contraseña: " . $e->getMessage();
+        }
+    }
+
     public function deleteUser()
     {
         if (!isset($_SESSION['user_email'])) {
