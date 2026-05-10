@@ -157,7 +157,10 @@ class UserController
             echo "Error al actualizar los datos: " . $e->getMessage();
         }
     }
-
+/**
+     * Procesa el cambio de contraseña aplicando validaciones de seguridad
+     * y encriptación mediante hash (Requerimientos 3.5 y 3.6).
+     */
     public function UpdatePassword()
     {
         if (!isset($_SESSION['user_email'])) {
