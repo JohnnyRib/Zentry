@@ -9,6 +9,8 @@ GRANT ALL PRIVILEGES ON Zentry.* TO 'Zentry_team'@'localhost';
 
 FLUSH PRIVILEGES;
 
+DROP TABLE IF EXISTS `user`;
+
 -- Estructura de la tabla user
 CREATE TABLE IF NOT EXISTS `user` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
