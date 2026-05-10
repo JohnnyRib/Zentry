@@ -218,6 +218,7 @@ class UserController
 
     public function logout()
     {
+        $_SESSION = [];
         session_destroy();
         header("Location: ../View/index.html");
         exit();
