@@ -5,7 +5,6 @@ Inicio de sesión y control de acceso para el login,
 registro y logout de usuarios.
 =========================================*/
 
-
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if (isset($_POST["register"])) {
         $user->registro();
-    }if (isset($_POST["update_user"])) {
+    }
+    if (isset($_POST["update_user"])) {
         $user->updateUser();
     }
     if (isset($_POST["delete_account"])) {
@@ -39,13 +39,6 @@ class UserController
     public $rol;
     public $conexion;
 
-
-
-
-    /*====================================================================================================
-Conexión a la base de datos utilizando PDO para una gestión más segura y eficiente de las consultas.
-=====================================================================================================*/
-
     public function __construct()
     {
         $host = "localhost";
@@ -54,28 +47,18 @@ Conexión a la base de datos utilizando PDO para una gestión más segura y efic
         $base_datos = "zentry";
 
         try {
-            //DNS
             $dns = "mysql:host=$host;dbname=$base_datos;charset=utf8mb4";
-
             $opciones = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false
             ];
             $this->conexion = new PDO($dns, $usuario, $password, $opciones);
-            echo "Conexión exitosa";
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
         }
     }
 
-    /*=============================================================================== 
-Metodos de registro, login y logout para gestionar la autenticación de usuarios, 
-con validaciones básicas y redirecciones según el rol del usuario.
-===============================================================================*/
-
-
-    //Registro de usuarios con validación de contraseñas y asignación de roles.
     public function registro()
     {
         $this->email = trim($_POST['email']);
@@ -88,17 +71,18 @@ con validaciones básicas y redirecciones según el rol del usuario.
             die("Error: las contraseñas no coinciden.");
         }
 
+        // Requerimiento 3.5: Hash de contraseña
+        $passwordHasheada = password_hash($this->pass, PASSWORD_DEFAULT);
+
         try {
-            // Usamos la tabla 'user' y los campos de tu lógica original
             $sql = "INSERT INTO `user` (email, username, password, repeat_password, role) 
                     VALUES (:email, :username, :password, :repeat_password, :role)";
 
             $stmt = $this->conexion->prepare($sql);
-
             $stmt->execute([
                 ':email'           => $this->email,
                 ':username'        => $this->usuario,
-                ':password'        => $this->pass,
+                ':password'        => $passwordHasheada,
                 ':repeat_password' => $this->pass2,
                 ':role'            => $this->rol
             ]);
@@ -113,26 +97,23 @@ con validaciones básicas y redirecciones según el rol del usuario.
             echo "Error al registrar: " . $e->getMessage();
         }
     }
-    //Login de usuarios con verificación de credenciales y redirección según el rol.
+
     public function login()
     {
         $this->usuario = $_POST['usuario'];
         $this->pass = $_POST['password'];
 
         try {
-
+            // Requerimiento 3.6: Verificación con password_verify
             $sql = "SELECT email, password, role FROM `user` WHERE email = :email";
             $stmt = $this->conexion->prepare($sql);
-
             $stmt->execute([':email' => $this->usuario]);
 
             if ($fila = $stmt->fetch()) {
-                // Verificación de contraseña
-                if ($this->pass === $fila['password']) {
+                if (password_verify($this->pass, $fila['password'])) {
                     $_SESSION['user_email'] = $fila['email'];
                     $_SESSION['user_role'] = $fila['role'];
 
-                    // Redirección según el rol
                     if ((int)$fila['role'] === 1) {
                         header("Location: ../View/Index_Promotor.html");
                     } else {
@@ -163,7 +144,6 @@ con validaciones básicas y redirecciones según el rol del usuario.
         try {
             $sql = "UPDATE `user` SET username = :username, email = :email WHERE email = :email_actual";
             $stmt = $this->conexion->prepare($sql);
-
             $stmt->execute([
                 ':username'     => $nuevoUsername,
                 ':email'        => $nuevoEmail,
@@ -176,6 +156,7 @@ con validaciones básicas y redirecciones según el rol del usuario.
             echo "Error al actualizar los datos: " . $e->getMessage();
         }
     }
+
     public function UpdatePassword()
     {
         if (!isset($_SESSION['user_email'])) {
@@ -197,16 +178,15 @@ con validaciones básicas y redirecciones según el rol del usuario.
             $stmtVerificar->execute([':email' => $emailUsuario]);
             $usuario = $stmtVerificar->fetch();
 
-            if ($usuario && $passActual === $usuario['password']) {
+            if ($usuario && password_verify($passActual, $usuario['password'])) {
+                $nuevaPassHasheada = password_hash($nuevaPass, PASSWORD_DEFAULT);
                 $sqlUpdate = "UPDATE `user` SET password = :password, repeat_password = :repeat_password WHERE email = :email";
                 $stmtUpdate = $this->conexion->prepare($sqlUpdate);
-
                 $stmtUpdate->execute([
-                    ':password'        => $nuevaPass,
-                    ':repeat_password' => $nuevaPass, 
+                    ':password'        => $nuevaPassHasheada,
+                    ':repeat_password' => $nuevaPassHasheada, 
                     ':email'           => $emailUsuario
                 ]);
-
                 echo "Contraseña actualizada con éxito.";
             } else {
                 echo "Error: La contraseña actual es incorrecta.";
@@ -219,20 +199,14 @@ con validaciones básicas y redirecciones según el rol del usuario.
     public function deleteUser()
     {
         if (!isset($_SESSION['user_email'])) {
-            die("Error: No se encontró una sesión activa para procesar la baja.");
+            die("Error: No se encontró una sesión activa.");
         }
-
         $emailUsuario = $_SESSION['user_email'];
-
         try {
             $sql = "DELETE FROM `user` WHERE email = :email";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':email' => $emailUsuario]);
-
-            // Una vez eliminado de la base de datos, procedemos a cerrar la sesión
             session_destroy();
-
-            // Redirigimos al index o página de despedida
             header("Location: ../View/index.html");
             exit();
         } catch (PDOException $e) {
