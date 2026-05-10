@@ -98,6 +98,7 @@ class UserController
         }
     }
 
+    //3.6 verificacion de contraseña mediante hash.
     public function login()
     {
         $this->usuario = $_POST['usuario'];
