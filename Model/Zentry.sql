@@ -10,6 +10,7 @@ GRANT ALL PRIVILEGES ON Zentry.* TO 'Zentry_team'@'localhost';
 FLUSH PRIVILEGES;
 
 DROP TABLE IF EXISTS `user`;
+--Borra lo existente para evitar conflictos al crear la tabla nuevamente.
 
 -- Estructura de la tabla user
 CREATE TABLE IF NOT EXISTS `user` (
