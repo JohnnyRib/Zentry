@@ -117,40 +117,39 @@ con validaciones básicas y redirecciones según el rol del usuario.
     }
     //Login de usuarios con verificación de credenciales y redirección según el rol.
     public function login()
-    {
-        $this->usuario = $_POST['usuario'];
-        $this->pass = $_POST['password'];
+{
+    $this->usuario = $_POST['usuario'];
+    $this->pass = $_POST['password'];
 
-        try {
+    try {
+   
+        $sql = "SELECT email, role FROM `user` WHERE email = :email AND password = :pass";
+        $stmt = $this->conexion->prepare($sql);
+        
+        $stmt->execute([
+            ':email' => $this->usuario,
+            ':pass' => $this->pass // Se enviaba la clave real directamente
+        ]);
 
-            $sql = "SELECT email, password, role FROM `user` WHERE email = :email";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->execute([':email' => $this->usuario]);
+        if ($fila = $stmt->fetch()) {
+            // Si encontraba coincidencia exacta de ambos campos
+            $_SESSION['user_email'] = $fila['email'];
+            $_SESSION['user_role'] = $fila['role'];
 
-
-            if ($fila = $stmt->fetch()) {
-                // Verificación de contraseña
-                if (password_verify($this->pass, $fila['password'])) {
-                    $_SESSION['user_email'] = $fila['email'];
-                    $_SESSION['user_role'] = $fila['role'];
-
-                    // Redirección según el rol
-                    if ((int)$fila['role'] === 1) {
-                        header("Location: ../View/Index_Promotor.html");
-                    } else {
-                        header("Location: ../View/Index_Cliente.html");
-                    }
-                    exit();
-                } else {
-                    echo "Error: Contraseña incorrecta.";
-                }
+            // Redirección simple según el número de rol
+            if ((int)$fila['role'] === 1) {
+                header("Location: ../View/Index_Promotor.html");
             } else {
-                echo "Error: Usuario no encontrado.";
+                header("Location: ../View/Index_Cliente.html");
             }
-        } catch (PDOException $e) {
-            echo "Error en el login: " . $e->getMessage();
+            exit();
+        } else {
+            echo "Error: Usuario o contraseña incorrectos.";
         }
+    } catch (PDOException $e) {
+        echo "Error en el login: " . $e->getMessage();
     }
+}
 
     public function updateUser()
     {
