@@ -70,6 +70,9 @@ class UserController
         if ($this->pass !== $this->pass2) {
             die("Error: las contraseñas no coinciden.");
         }
+        if (strlen($this->pass) < 8) {
+            die("Error: La contraseña debe tener al menos 8 caracteres.");
+        }
 
         // Requerimiento 3.5: Hash de contraseña
         $passwordHasheada = password_hash($this->pass, PASSWORD_DEFAULT);
@@ -157,10 +160,7 @@ class UserController
             echo "Error al actualizar los datos: " . $e->getMessage();
         }
     }
-/**
-     * Procesa el cambio de contraseña aplicando validaciones de seguridad
-     * y encriptación mediante hash (Requerimientos 3.5 y 3.6).
-     */
+
     public function UpdatePassword()
     {
         if (!isset($_SESSION['user_email'])) {
@@ -168,19 +168,12 @@ class UserController
         }
 
         $emailUsuario = $_SESSION['user_email'];
-        $passActual = $_POST['current_password']; 
+        $passActual = $_POST['current_password'];
         $nuevaPass = $_POST['new_password'];
         $confirmarPass = $_POST['confirm_password'];
 
         if ($nuevaPass !== $confirmarPass) {
             die("Error: La nueva contraseña y su confirmación no coinciden.");
-        }
-        if (strlen($nuevaPass) < 8) {
-            die("Error: La nueva contraseña debe tener al menos 8 caracteres por seguridad.");
-        }
-
-        if ($passActual === $nuevaPass) {
-            die("Error: La nueva contraseña no puede ser idéntica a la actual.");
         }
 
         try {
@@ -195,7 +188,7 @@ class UserController
                 $stmtUpdate = $this->conexion->prepare($sqlUpdate);
                 $stmtUpdate->execute([
                     ':password'        => $nuevaPassHasheada,
-                    ':repeat_password' => $nuevaPassHasheada, 
+                    ':repeat_password' => $nuevaPassHasheada,
                     ':email'           => $emailUsuario
                 ]);
                 echo "Contraseña actualizada con éxito.";
@@ -217,6 +210,7 @@ class UserController
             $sql = "DELETE FROM `user` WHERE email = :email";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':email' => $emailUsuario]);
+            $_SESSION = [];
             session_destroy();
             header("Location: ../View/index.html");
             exit();
@@ -227,6 +221,7 @@ class UserController
 
     public function logout()
     {
+        $_SESSION = [];
         session_destroy();
         header("Location: ../View/index.html");
         exit();
