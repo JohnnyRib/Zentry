@@ -172,6 +172,13 @@ class UserController
         if ($nuevaPass !== $confirmarPass) {
             die("Error: La nueva contraseña y su confirmación no coinciden.");
         }
+        if (strlen($nuevaPass) < 8) {
+            die("Error: La nueva contraseña debe tener al menos 8 caracteres por seguridad.");
+        }
+
+        if ($passActual === $nuevaPass) {
+            die("Error: La nueva contraseña no puede ser idéntica a la actual.");
+        }
 
         try {
             $sqlVerificar = "SELECT password FROM `user` WHERE email = :email";
