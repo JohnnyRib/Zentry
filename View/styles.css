@@ -679,9 +679,7 @@ input[type="file"] {
 
 }
 
-/* =========================================================
-   MODAL CREAR EVENTO
-========================================================= */
+/*JAVASCRIPT*/
 
 #fondoModalEvento {
   display: none;
@@ -730,4 +728,29 @@ input[type="file"] {
 
 #cajaModalEvento small {
   color: #555555;
+}
+
+.slider-promotores {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.card-promotor {
+  background: var(--bg-card); 
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 0 10px; 
+  text-align: center;
+}
+
+.card-promotor img {
+  max-width: 100px;
+  margin: 0 auto 10px;
+  filter: grayscale(100%);
+  transition: 0.3s;
+}
+
+.card-promotor:hover img {
+  filter: grayscale(0%);
 }
