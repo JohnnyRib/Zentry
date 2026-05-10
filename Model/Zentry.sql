@@ -17,3 +17,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     `password` VARCHAR(255) NOT NULL,
     `role` ENUM('Cliente', 'Promotor') NOT NULL DEFAULT 'Cliente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Configuración de la Tabla de Usuario
+-- ENGINE=InnoDB: Garantiza integridad referencial y recuperación de errores.
+-- CHARSET=utf8mb4: Soporte completo para caracteres especiales y emojis.
+
