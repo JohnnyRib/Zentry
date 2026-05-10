@@ -109,6 +109,7 @@ con validaciones básicas y redirecciones según el rol del usuario.
 
 
 //Login de usuarios con verificación de credenciales y redirección según el rol.
+//3.6 verificacion de contraseña mediante hash.
     public function login()
 {
     $this->usuario = $_POST['usuario'];
