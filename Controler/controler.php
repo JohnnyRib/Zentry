@@ -207,6 +207,7 @@ class UserController
             $sql = "DELETE FROM `user` WHERE email = :email";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':email' => $emailUsuario]);
+            $_SESSION = [];
             session_destroy();
             header("Location: ../View/index.html");
             exit();
