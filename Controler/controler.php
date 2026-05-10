@@ -70,6 +70,9 @@ class UserController
         if ($this->pass !== $this->pass2) {
             die("Error: las contraseñas no coinciden.");
         }
+        if (strlen($this->pass) < 8) {
+            die("Error: La contraseña debe tener al menos 8 caracteres.");
+        }
 
         // Requerimiento 3.5: Hash de contraseña
         $passwordHasheada = password_hash($this->pass, PASSWORD_DEFAULT);
@@ -165,7 +168,7 @@ class UserController
         }
 
         $emailUsuario = $_SESSION['user_email'];
-        $passActual = $_POST['current_password']; 
+        $passActual = $_POST['current_password'];
         $nuevaPass = $_POST['new_password'];
         $confirmarPass = $_POST['confirm_password'];
 
@@ -185,7 +188,7 @@ class UserController
                 $stmtUpdate = $this->conexion->prepare($sqlUpdate);
                 $stmtUpdate->execute([
                     ':password'        => $nuevaPassHasheada,
-                    ':repeat_password' => $nuevaPassHasheada, 
+                    ':repeat_password' => $nuevaPassHasheada,
                     ':email'           => $emailUsuario
                 ]);
                 echo "Contraseña actualizada con éxito.";
