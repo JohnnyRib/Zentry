@@ -12,7 +12,7 @@ FLUSH PRIVILEGES;
 DROP TABLE IF EXISTS `user`;
 --Borra lo existente para evitar conflictos al crear la tabla nuevamente.
 
--- Estructura de la tabla user
+-- Estructura de la tabla User
 CREATE TABLE IF NOT EXISTS `user` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `username` VARCHAR(50) NOT NULL,
@@ -24,3 +24,13 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- ENGINE=InnoDB: Garantiza integridad referencial y recuperación de errores.
 -- CHARSET=utf8mb4: Soporte completo para caracteres especiales y emojis.
 
+-- Estructura de la tabla Events
+CREATE TABLE IF NOT EXISTS `events` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(100) NOT NULL,
+    `description` TEXT,
+    `date` DATETIME NOT NULL,
+    `location` VARCHAR(255) NOT NULL,
+    `promoter_id` INT,
+    FOREIGN KEY (promoter_id) REFERENCES user(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
