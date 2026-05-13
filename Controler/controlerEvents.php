@@ -7,7 +7,7 @@ class EventController {
 
 
 /*=========================================================
-    R. Metodo de Lectura Registros de Eventos 
+    R. Metodo de Lectura Registros de Eventos
 ==========================================================*/
     public function leerEventos()
     {
