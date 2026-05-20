@@ -7,6 +7,8 @@ registro y logout de usuarios.
 
 session_start();
 
+//commit
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = new UserController();
 
