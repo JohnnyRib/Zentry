@@ -6,7 +6,6 @@ registro y logout de usuarios.
 =========================================*/
 
 
-//commit prueba
 
 session_start();
 
