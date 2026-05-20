@@ -5,6 +5,9 @@ Inicio de sesión y control de acceso para el login,
 registro y logout de usuarios.
 =========================================*/
 
+
+//commit prueba
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
