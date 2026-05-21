@@ -85,11 +85,11 @@ class UserController
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
-                ':email'           => $this->email,
-                ':username'        => $this->usuario,
-                ':password'        => $passwordHasheada,
+                ':email' => $this->email,
+                ':username' => $this->usuario,
+                ':password' => $passwordHasheada,
                 ':repeat_password' => $this->pass2,
-                ':role'            => $this->rol
+                ':role' => $this->rol
             ]);
 
             if ($this->rol === 1) {
@@ -120,7 +120,7 @@ class UserController
                     $_SESSION['user_email'] = $fila['email'];
                     $_SESSION['user_role'] = $fila['role'];
 
-                    if ((int)$fila['role'] === 1) {
+                    if ((int) $fila['role'] === 1) {
                         header("Location: ../View/Index_Promotor.html");
                     } else {
                         header("Location: ../View/Index_Cliente.html");
@@ -151,8 +151,8 @@ class UserController
             $sql = "UPDATE `user` SET username = :username, email = :email WHERE email = :email_actual";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
-                ':username'     => $nuevoUsername,
-                ':email'        => $nuevoEmail,
+                ':username' => $nuevoUsername,
+                ':email' => $nuevoEmail,
                 ':email_actual' => $emailActual
             ]);
 
@@ -189,9 +189,9 @@ class UserController
                 $sqlUpdate = "UPDATE `user` SET password = :password, repeat_password = :repeat_password WHERE email = :email";
                 $stmtUpdate = $this->conexion->prepare($sqlUpdate);
                 $stmtUpdate->execute([
-                    ':password'        => $nuevaPassHasheada,
+                    ':password' => $nuevaPassHasheada,
                     ':repeat_password' => $nuevaPassHasheada,
-                    ':email'           => $emailUsuario
+                    ':email' => $emailUsuario
                 ]);
                 echo "Contraseña actualizada con éxito.";
             } else {
@@ -223,8 +223,13 @@ class UserController
 
     public function logout()
     {
-        $_SESSION = [];
-        session_destroy();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION = [];      // Vacía los datos de la sesión
+        session_destroy();   // Destruye la sesión
+
         header("Location: ../View/index.html");
         exit();
     }
