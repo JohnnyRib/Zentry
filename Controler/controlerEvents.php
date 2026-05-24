@@ -7,7 +7,7 @@ class controlerEvents
     public function __construct()
     {
         $host = 'localhost';
-        $db   = 'gestion_eventos';
+        $db   = 'zentry';
         $user = 'root';
         $pass = '';
         $charset = 'utf8mb4';
@@ -59,5 +59,21 @@ class controlerEvents
         $sql = "DELETE FROM eventos WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["crear_evento"])) {
+    $controller = new controlerEvents();
+
+    $titulo = $_POST["titulo"];
+    $descripcion = $_POST["descripcion"];
+    $fecha = $_POST["fecha"];
+    $ubicacion = $_POST["ubicacion"];
+
+    if ($controller->crear($titulo, $descripcion, $fecha, $ubicacion)) {
+        header("Location: ../View/listado-evento.html");
+        exit();
+    } else {
+        echo "Error: No se pudo crear el evento.";
     }
 }
