@@ -754,16 +754,3 @@ input[type="file"] {
 .card-promotor:hover img {
   filter: grayscale(0%);
 }
-
-/*=========================================== 
-Estilo para los mensajes de error del login 
-===========================================*/
-.error {
-  background-color: #ffd6d6;
-  color: #8b0000;
-  border: 1px solid #ff9b9b;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
