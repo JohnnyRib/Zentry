@@ -67,44 +67,74 @@ class UserController
         $this->usuario = trim($_POST['username']);
         $this->pass = $_POST['password'];
         $this->pass2 = $_POST['repeat-password'];
-        $this->rol = ($_POST['role'] === "Promotor") ? 1 : 0;
+        $this->rol = ($_POST['role'] === "Promotor") ? "Promotor" : "Cliente";
 
         if ($this->pass !== $this->pass2) {
             die("Error: las contraseñas no coinciden.");
         }
+
         if (strlen($this->pass) < 8) {
             die("Error: La contraseña debe tener al menos 8 caracteres.");
         }
 
-        // Requerimiento 3.5: Hash de contraseña
+        $rutaImagen = null;
+
+        if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
+            $carpetaUploads = "../uploads/";
+
+            if (!is_dir($carpetaUploads)) {
+                mkdir($carpetaUploads, 0777, true);
+            }
+
+            $nombreOriginal = basename($_FILES['profile_image']['name']);
+            $extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
+
+            $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+            if (!in_array($extension, $extensionesPermitidas)) {
+                die("Error: Solo se permiten imágenes JPG, JPEG, PNG, GIF o WEBP.");
+            }
+
+            $nombreImagen = uniqid("profile_", true) . "." . $extension;
+            $rutaDestino = $carpetaUploads . $nombreImagen;
+
+            if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $rutaDestino)) {
+                $rutaImagen = "uploads/" . $nombreImagen;
+            } else {
+                die("Error: No se pudo subir la imagen.");
+            }
+        }
+
         $passwordHasheada = password_hash($this->pass, PASSWORD_DEFAULT);
 
         try {
-            $sql = "INSERT INTO `user` (email, username, password, repeat_password, role) 
-                    VALUES (:email, :username, :password, :repeat_password, :role)";
+            $sql = "INSERT INTO user (email, username, password, profile_image, role) 
+                VALUES (:email, :username, :password, :profile_image, :role)";
 
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([
                 ':email' => $this->email,
                 ':username' => $this->usuario,
                 ':password' => $passwordHasheada,
-                ':repeat_password' => $this->pass2,
+                ':profile_image' => $rutaImagen,
                 ':role' => $this->rol
             ]);
 
-            if ($this->rol === 1) {
+            if ($this->rol === "Promotor") {
                 header("Location: ../View/Index_Promotor.html");
             } else {
                 header("Location: ../View/Index_Cliente.html");
             }
+
             exit();
+
         } catch (PDOException $e) {
             echo "Error al registrar: " . $e->getMessage();
         }
     }
-
-    //3.6 verificacion de contraseña mediante hash.
     
+    //3.6 verificacion de contraseña mediante hash.
+
     public function login()
     {
         //Casos de error-
