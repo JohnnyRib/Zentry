@@ -104,36 +104,55 @@ class UserController
     }
 
     //3.6 verificacion de contraseña mediante hash.
+    
     public function login()
     {
-        $this->usuario = $_POST['usuario'];
-        $this->pass = $_POST['password'];
+        //Casos de error-
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $this->usuario = $_POST['usuario'] ?? '';
+        $this->pass = $_POST['password'] ?? '';
 
         try {
-            // Requerimiento 3.6: Verificación con password_verify
+            if (empty($this->usuario) || empty($this->pass)) {
+                $_SESSION['error'] = "Debes completar todos los campos.";
+                header("Location: ../View/index.php");
+                exit();
+            }
+
             $sql = "SELECT email, password, role FROM `user` WHERE email = :email";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute([':email' => $this->usuario]);
 
-            if ($fila = $stmt->fetch()) {
+            if ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 if (password_verify($this->pass, $fila['password'])) {
                     $_SESSION['user_email'] = $fila['email'];
                     $_SESSION['user_role'] = $fila['role'];
 
-                    if ((int) $fila['role'] === 1) {
+                    if ($fila['role'] === 'Promotor') {
                         header("Location: ../View/Index_Promotor.html");
                     } else {
                         header("Location: ../View/Index_Cliente.html");
                     }
+
                     exit();
                 } else {
-                    echo "Error: Contraseña incorrecta.";
+                    $_SESSION['error'] = "Contraseña incorrecta.";
+                    header("Location: ../View/index.php");
+                    exit();
                 }
             } else {
-                echo "Error: Usuario no encontrado.";
+                $_SESSION['error'] = "Usuario no encontrado.";
+                header("Location: ../View/index.php");
+                exit();
             }
+
         } catch (PDOException $e) {
-            echo "Error en el login: " . $e->getMessage();
+            $_SESSION['error'] = "Error en el login.";
+            header("Location: ../View/index.php");
+            exit();
         }
     }
 
