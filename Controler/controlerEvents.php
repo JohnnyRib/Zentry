@@ -7,7 +7,7 @@ class controlerEvents
     public function __construct()
     {
         $host = 'localhost';
-        $db   = 'zentry';
+        $db   = 'Zentry';
         $user = 'root';
         $pass = '';
         $charset = 'utf8mb4';

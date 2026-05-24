@@ -28,14 +28,14 @@ $(document).ready(function () {
 
   if (!localStorage.getItem("cookiesAceptadas")) {
     $("main").prepend(banner);
-    $('button[type="submit"]').hide();
+    $('body.login-page button[type="submit"]').hide();
     console.log("Cookies no aceptadas. Login bloqueado.");
   }
 
   $(document).on("click", "#aceptarCookies", function () {
     localStorage.setItem("cookiesAceptadas", "true");
     $("#cookie-banner").fadeOut();
-    $('button[type="submit"]').fadeIn();
+    $('body.login-page button[type="submit"]').fadeIn();
     console.log("Cookies aceptadas. Login habilitado.");
   });
 
@@ -72,6 +72,6 @@ $(document).ready(function () {
     console.log("El ratón ha salido de la imagen.");
   });
 
-  
+
 });
 
